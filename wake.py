@@ -10,12 +10,10 @@ pc_on = False
 counter = 0
 time_in_range = [0, 0, 0]
 
-
 def check_pc_stat():
     final = ""
      
     os.system("ping 192.168.1.36 -c 1 > ping.txt")
-    print("Pinged")
     with open("ping.txt", "r") as ping_txt:
         all_lines = ping_txt.readlines()
         x = all_lines[4].split(",")
@@ -23,11 +21,11 @@ def check_pc_stat():
             final = x[1][1]
         except IndexError:
             return False
-        print(final)
     if final == 0:
         return False
     else:
         return True
+        
         
 
 def check_time_in_range(count):
@@ -39,12 +37,9 @@ def check_time_in_range(count):
     time_in_range[counter] = count
     counter += 1
     
-    print(time_in_range)
-    
     total_time = (time_in_range[0] + time_in_range[1] + time_in_range[2])
     
     return total_time
-
 
 def check_for_range():
     os.system("python lnsm.py {} {} > blue.txt".format(BLUETOOTH_MAC, NUMBER_OF_PINGS))
@@ -62,11 +57,10 @@ def check_for_range():
         
     else:
         return 0
-
-
+    
 def main():
+    global pc_on
     while True:
-        print("at main")
         times_counted = check_time_in_range(check_for_range())
         if times_counted == 3:
             print("sent magic packet")
@@ -74,7 +68,8 @@ def main():
             pc_on = True
             while pc_on is True:    
                 pc_on = check_pc_stat()
-                time.sleep(5)
+                time.sleep(600)
+        print("checked_range", times_counted)
         time.sleep(3)
 
 

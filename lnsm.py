@@ -26,6 +26,8 @@ def main():
             print("i")
         else:
             print("o")
+            
+
 
 
 if __name__ == '__main__':
