@@ -3,7 +3,7 @@ import time
 import sys
 import math
 
-NUM_LOOP = 2
+NUM_LOOP = 3
 
 def print_usage():
     print "Usage: python test_address.py <bluetooth-address>"
@@ -21,14 +21,15 @@ def main():
     btrssi = BluetoothRSSI(addr=addr)
 
     for i in range(1, num):
-        rssi_bt = float(btrssi.get_rssi())        
+        try:
+            rssi_bt = btrssi.get_rssi()
+        except TypeError:
+            ressi_bt = 0
+            
         if rssi_bt == 0:
             print("i")
         else:
             print("o")
             
-
-
-
-if __name__ == '__main__':
+if __name__ == "__main__":    
     main()
